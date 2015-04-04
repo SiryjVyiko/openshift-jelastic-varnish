@@ -11,6 +11,8 @@ sudo /usr/sbin/setcap cap_net_bind_service=+ep ${OPENSHIFT_VARNISH_DIR}/versions
 
 [ ! -e $CARTRIDGE_HOME/vcl/default.vcl ] && cp  $CARTRIDGE_HOME/versions/$Version/etc/varnish/default.vcl $CARTRIDGE_HOME/vcl/default.vcl;
 
+[ ! -e /etc/nginx/nginx.conf ] && cp $CARTRIDGE_HOME/versions/$Version/nginx.conf /etc/nginx/nginx.conf;
+
 [ -e $CARTRIDGE_HOME/versions/$Version/etc/sysconfig/varnish ] && . /$CARTRIDGE_HOME/versions/$Version/etc/sysconfig/varnish
 
 function start {
@@ -22,6 +24,20 @@ function start {
 
   local varnproc=`ps aux|grep varnishlog|grep -v grep|awk '{print $2}'`;
   [ -z "$varnproc" ] && rm -f /opt/repo/pid/varnishlog.pid
+  
+  [ -z "$DAEMON_OPTS" ] && { DAEMON_OPTS=" -f ${CARTRIDGE_HOME}/vcl/default.vcl \
+    -T 0.0.0.0:80 \
+    -n ${CARTRIDGE_HOME}/versions/${Version}/var/lib/varnish -P ${CARTRIDGE_HOME}/pid/varnish.pid \
+    -u jelastic -g jelastic \
+    -a 127.0.0.1:81 \
+    -p vmod_dir=$CARTRIDGE_HOME/versions/$Version/usr/lib64/varnish/vmods/ \
+    -S ${CARTRIDGE_HOME}/secret \
+    -t 120 \
+    -p thread_pool_min=50 \
+    -p thread_pool_max=1000 \
+    -p thread_pool_timeout=120 \
+    -s malloc,80M \
+    -p vcl_dir=${CARTRIDGE_HOME}/vcl";}
   
   if ! [ -f $CARTRIDGE_HOME/pid/varnish.pid ]; then
     "$CARTRIDGE_HOME/versions/$Version/usr/sbin/varnishd" $DAEMON_OPTS
