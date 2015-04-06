@@ -85,7 +85,7 @@ function reload {
     	$CARTRIDGE_HOME/versions/$Version/usr/bin/varnishadm -T 127.0.0.1:81 -S $CARTRIDGE_HOME/secret vcl.use $RELOAD > /dev/null 2>&1;
     	echo "Varnish configuration is reloaded successfully";
     else
-	echo "Unable to reload config: Varnish process is stoped";
+	echo "Unable to reload config: Varnish process is stopped";
     fi
 }
 
