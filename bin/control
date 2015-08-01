@@ -63,12 +63,17 @@ function start {
 
 function stop {
   sudo service nginx stop > /dev/null 2>&1;
+  local varnproc=`ps aux|grep varnish|grep -v grep|awk '{print $2}'`;
+  if [ -z "$varnproc" ]; then
+        echo "Varnish is already stopped"; return 0;
+  else
   [ -f $CARTRIDGE_HOME/pid/varnish.pid ] && { pid=$(<$CARTRIDGE_HOME/pid/varnish.pid); kill -s SIGTERM  $pid >/dev/null 2>&1; sleep 7; rm -f $CARTRIDGE_HOME/pid/varnish.pid; }
   [ -f $CARTRIDGE_HOME/pid/varnishlog.pid ] && { pid=$(<$CARTRIDGE_HOME/pid/varnishlog.pid); kill -s SIGTERM  $pid >/dev/null 2>&1; sleep 7; rm -f $CARTRIDGE_HOME/pid/varnishlog.pid; }
-  local varnproc=`ps aux|grep varnish|grep -v grep|awk '{print $2}'`;
+  varnproc=`ps aux|grep varnish|grep -v grep|awk '{print $2}'`;
   [ -n "$varnproc" ] && kill -9 $varnproc > /dev/null 2>&1;
   varnproc=`ps aux|grep varnish|grep -v grep|awk '{print $2}'`;
   [ -z "$varnproc" ] && { echo "Varnish has been stopped successfully"; return 0; } || { echo "Varnish hasn't been stopped"; return 1; };
+  fi
 }
 
 function restart {
