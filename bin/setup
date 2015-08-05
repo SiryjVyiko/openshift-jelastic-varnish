@@ -15,7 +15,7 @@ ln -s /lib64/libvarnishapi.so.1.0.0 /lib64/libvarnishapi.so.1
 
 /sbin/iptables -t nat -D PREROUTING -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 8080
 /sbin/iptables -t nat -D PREROUTING -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8743
-/etc/init.d/iptables save;
+service iptables save;
 
 touch /etc/ld.so.conf.d/varnish-x86_64.conf;
 echo "/opt/repo/versions/4.0.2/usr/lib64/varnish" >> /etc/ld.so.conf.d/varnish-x86_64.conf;
