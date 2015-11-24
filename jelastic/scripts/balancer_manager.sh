@@ -20,7 +20,9 @@ function _add_common_host(){
     sed -i '/import directors;/a backend serv'$host_num' { .host = "'${host}'"; .port = "80"; .probe = { .url = "\/"; .timeout = 30s; .interval = 60s; .window = 5; .threshold = 2; } }' $CARTRIDGE_HOME/vcl/default.vcl;
     sed -i '/new myclust = directors.*;/a myclust.add_backend(serv'$host_num', 1);' $CARTRIDGE_HOME/vcl/default.vcl;
     sed -i '/backend default { .host = "127.0.0.1"/d' $CARTRIDGE_HOME/vcl/default.vcl;
-
+    local RELOAD=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-16};echo;`;
+    $CARTRIDGE_HOME/versions/$Version/usr/bin/varnishadm -T 127.0.0.1:81 -S $CARTRIDGE_HOME/secret vcl.load $RELOAD $CARTRIDGE_HOME/vcl/default.vcl > /dev/null 2>&1;
+    $CARTRIDGE_HOME/versions/$Version/usr/bin/varnishadm -T 127.0.0.1:81 -S $CARTRIDGE_HOME/secret vcl.use $RELOAD > /dev/null 2>&1;
 }
 
 function _remove_common_host(){
