@@ -18,8 +18,8 @@ ln -s /lib64/libvarnishapi.so.1.0.0 /lib64/libvarnishapi.so.1
 service iptables save > /dev/null;
 
 touch /etc/ld.so.conf.d/varnish-x86_64.conf;
-echo "/opt/repo/versions/4.0.2/usr/lib64/varnish" >> /etc/ld.so.conf.d/varnish-x86_64.conf;
+echo "/opt/repo/versions/${Version}/usr/lib64/varnish" >> /etc/ld.so.conf.d/varnish-x86_64.conf;
 ldconfig;
 
 cp -f $CARTRIDGE_HOME/versions/$Version/nginx.conf /etc/nginx/nginx.conf
-ln -sfT /etc/nginx/nginx.conf /opt/repo/versions/4.0.2/etc/sysconfig/nginx.conf
+ln -sfT /etc/nginx/nginx.conf /opt/repo/versions/${Version}/etc/sysconfig/nginx.conf

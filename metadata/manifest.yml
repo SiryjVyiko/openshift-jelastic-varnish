@@ -8,7 +8,7 @@ License: BSD
 Vendor: Red Hat / Varnish
 Cartridge-Version: 0.1
 Cartridge-Vendor: community
-Source-Url: https://github.com/jelastic-public-cartridges/openshift-jelastic-varnish.git
+Source-Url: https://github.com/SiryjVyiko/openshift-jelastic-varnish.git
 Categories:
   - service
   - web_framework
