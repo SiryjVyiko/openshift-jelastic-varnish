@@ -28,7 +28,6 @@ function start {
   [ -z "$DAEMON_OPTS" ] && { DAEMON_OPTS=" -f ${CARTRIDGE_HOME}/vcl/default.vcl \
     -T 0.0.0.0:80 \
     -n ${CARTRIDGE_HOME}/versions/${Version}/var/lib/varnish -P ${CARTRIDGE_HOME}/pid/varnish.pid \
-    -u jelastic -g jelastic \
     -a 127.0.0.1:81 \
     -p vmod_dir=$CARTRIDGE_HOME/versions/$Version/usr/lib64/varnish/vmods/ \
     -S ${CARTRIDGE_HOME}/secret \
