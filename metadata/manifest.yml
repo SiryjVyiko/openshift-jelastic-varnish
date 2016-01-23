@@ -2,8 +2,8 @@ Name: varnish
 Cartridge-Short-Name: VARNISH
 Display-Name: Downloadable Varnish cartridge 4.x
 Description: "A downloadable varnish cartridge for web caching.."
-Version: '4.0.2'
-Versions: ['4.0.2']
+Version: '4.1.0'
+Versions: ['4.1.0']
 License: BSD
 Vendor: Red Hat / Varnish
 Cartridge-Version: 0.1
