@@ -84,7 +84,7 @@ function reload {
     local varnproc=`ps aux|grep varnish|grep -v grep|awk '{print $2}'`;
     if [ -n "$varnproc" ] 
     then 
-    	local RELOAD=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-16};echo;`;
+    	local RELOAD=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c16`;
     	$CARTRIDGE_HOME/versions/$Version/usr/bin/varnishadm -T 127.0.0.1:81 -S $CARTRIDGE_HOME/secret vcl.load $RELOAD $CARTRIDGE_HOME/vcl/default.vcl > /dev/null 2>&1;
     	$CARTRIDGE_HOME/versions/$Version/usr/bin/varnishadm -T 127.0.0.1:81 -S $CARTRIDGE_HOME/secret vcl.use $RELOAD > /dev/null 2>&1;
     	echo "Varnish configuration is reloaded successfully";
