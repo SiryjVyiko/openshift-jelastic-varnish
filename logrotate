@@ -4,7 +4,7 @@
     delaycompress
     copytruncate
     daily
-    rotate 30
+    rotate 10
     create 0644 jelastic jelastic
     postrotate
         /bin/kill -HUP `cat /var/run/varnishlog.pid 2>/dev/null` 2> /dev/null || true
