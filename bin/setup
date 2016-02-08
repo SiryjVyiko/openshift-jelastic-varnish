@@ -4,6 +4,8 @@ echo "jelastic ALL=(ALL) NOPASSWD: /usr/sbin/setcap, /sbin/service cartridge rel
 
 source /etc/jelastic/environment;
 
+mv /opt/repo/logrotate /etc/logrotate.d/varnish;
+
 chmod +x $CARTRIDGE_HOME/bin/post-install;
 
 mkdir logs pid lock;
