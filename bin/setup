@@ -6,6 +6,8 @@ source /etc/jelastic/environment;
 
 mv /opt/repo/logrotate /etc/logrotate.d/varnish;
 
+chown root:root /etc/logrotate.d/varnish;
+
 chmod +x $CARTRIDGE_HOME/bin/post-install;
 
 mkdir logs pid lock;
