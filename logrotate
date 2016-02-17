@@ -1,12 +1,13 @@
 /opt/repo/logs/varnish.log {
     missingok
-    compress
-    delaycompress
+    notifempty
+    nocompress
     copytruncate
     daily
-    rotate 10
+    rotate 7
     create 0644 jelastic jelastic
     postrotate
+    dateext
         /bin/kill -HUP `cat /var/run/varnishlog.pid 2>/dev/null` 2> /dev/null || true
     endscript
 }
