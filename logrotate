@@ -4,7 +4,7 @@
 	delaycompress
 	copytruncate
 	daily
-	size 50m
+	size 50M
 	rotate 7
 	create 0644 jelastic jelastic
 	dateext
